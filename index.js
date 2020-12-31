@@ -62,12 +62,14 @@ sendXDC = async (from, to, gasPrice = 2, amount, privateKey) => {
 };
 
 const send100XDC = async () => {
+  console.log("STARTED");
   try {
     const { XDC } = await generateWallet();
+    console.log("Generated wallet ", XDC);
     const sender = XDC.address;
     const receiver = "0xec2ee92fac10e3a8857a88eff9f7534f05296631";
     const balance = await getBalance(sender);
-    console.log(`\n\n\nSender balance ${sender}`, balance);
+    console.log(`Sender balance ${sender}`, balance);
     const txn = await sendXDC(sender, receiver, 2, 100, XDC.privateKey);
     console.log(txn);
   } catch (e) {
