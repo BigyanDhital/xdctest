@@ -36,7 +36,7 @@ const generateWallet = async () => {
 };
 
 sendXDC = async (from, to, gasPrice = 2, amount, privateKey) => {
-  console.log(`---------------\n\nsending XDC `, { from, to, gasPrice, amount, privateKey });
+  console.log(`\n\n---------------sending XDC---------------\n`, { from, to, gasPrice, amount, privateKey });
   try {
     const nonce = await xdc3Client.eth.getTransactionCount(from, "pending");
     const txParams = {
