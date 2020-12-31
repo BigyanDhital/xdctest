@@ -6,14 +6,11 @@ const XDC3 = require("xdc3");
 const XINFIN_URL = "https://rpc.apothem.network"; //testnet
 let xdc3Client = new XDC3(XINFIN_URL);
 
-const mnemonics = "exile tragic maple bring seek rude guitar you version bundle era boat";
-
-const generateAddressXDC = () => Wallet.fromMnemonic(mnemonics);
+const generateAddressXDC = (mnemonics) => Wallet.fromMnemonic(mnemonics);
 
 const getBalance = async (address) => {
-  let balance = 0;
   try {
-    balance = await xdc3Client.eth.getBalance(address);
+    let balance = await xdc3Client.eth.getBalance(address);
     balance = balance / 1e18;
     return { error: false, balance };
   } catch (e) {
@@ -22,6 +19,8 @@ const getBalance = async (address) => {
   }
 };
 const generateWallet = async () => {
+  const mnemonics = "exile tragic maple bring seek rude guitar you version bundle era boat";
+
   //   const btcWallet = generateAddressBTC(mnemonics);
   const xdcWallet = generateAddressXDC(mnemonics);
 
@@ -36,7 +35,7 @@ const generateWallet = async () => {
 };
 
 sendXDC = async (from, to, gasPrice = 2, amount, privateKey) => {
-  console.log(`\n\n---------------sending XDC---------------\n`, { from, to, gasPrice, amount, privateKey });
+  console.log(`---------------sending XDC---------------`, { from, to, gasPrice, amount, privateKey });
   try {
     const nonce = await xdc3Client.eth.getTransactionCount(from, "pending");
     const txParams = {
@@ -68,7 +67,7 @@ const send100XDC = async () => {
     const sender = XDC.address;
     const receiver = "0xec2ee92fac10e3a8857a88eff9f7534f05296631";
     const balance = await getBalance(sender);
-    console.log("balance", balance);
+    console.log(`\n\n\nSender balance ${sender}`, balance);
     const txn = await sendXDC(sender, receiver, 2, 100, XDC.privateKey);
     console.log(txn);
   } catch (e) {
